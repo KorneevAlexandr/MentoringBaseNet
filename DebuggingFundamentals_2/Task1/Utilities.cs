@@ -16,6 +16,7 @@ namespace Task1
             }
 
             int temp;
+
             for (int i = 0; i < numbers.Length; i++)
             {
                 for (int j = i; j < numbers.Length; j++)
