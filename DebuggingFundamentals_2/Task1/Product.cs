@@ -21,7 +21,7 @@
                 return false;
             }
 
-            if (product.Name.Equals(Name) && product.Price == Price)
+            if (product.Name.Equals(Name) && product.Price.Equals(Price))
             {
                 return true;
             }
