@@ -1,20 +1,10 @@
 ﻿using Library;
 using Library.Tree;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Task
 {
@@ -23,23 +13,30 @@ namespace Task
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string BaseDirectory = "C:\\Users\\Aliaksandr_Karneyeu\\source\\CryptoJack";
+        private FileSystemVisitor _visitor;
+
+        private delegate void Handler(string message);
+        private event Handler HandlerEvent; 
+
         public MainWindow()
         {
             InitializeComponent();
 
-            FileSystemVisitor visitor = new FileSystemVisitor("C:\\Users\\Aliaksandr_Karneyeu\\source\\CryptoJack");
-            var tree = visitor.GetTree();
-
-            var view = new TreeView();
-            var root = new TreeViewItem() { Header = "C:\\Users\\Aliaksandr_Karneyeu\\source\\CryptoJack" };
-
-            FillTree(tree, root);
-            view.Items.Add(root);
-
-            MainGrid.Children.Add(view);
+            HandlerEvent += ShowMessage;
         }
 
-        private void FillTree(TreeNode startNode, TreeViewItem root)
+        private void FillTree()
+        {
+            var tree = _visitor.GetTree();
+            var root = new TreeViewItem() { Header = BaseDirectory };
+            Tree.Items.Clear();
+
+            FillTreeImpl(tree, root);
+            Tree.Items.Add(root);
+        }
+
+        private void FillTreeImpl(TreeNode startNode, TreeViewItem root)
         {
             var allItems = startNode.GetChildren();
             var directories = allItems.Where(x => x.IsComposite());
@@ -49,13 +46,41 @@ namespace Task
             {
                 var node = new TreeViewItem() { Header = directory.ToString() };
                 root.Items.Add(node);
-                FillTree(directory, node);
+                FillTreeImpl(directory, node);
             }
 
             foreach (var file in files)
             {
                 root.Items.Add(new TreeViewItem() { Header = file.ToString() });
             }
+        }
+
+        private void ShowMessage(string message)
+        {
+            Log.Text = message;
+        }
+
+        private void OrderName_Click(object sender, RoutedEventArgs e)
+        {
+            _visitor = new FileSystemVisitor(BaseDirectory);
+            FillTree();
+            HandlerEvent?.Invoke("Files found");
+        }
+
+        private void OrderDescName_Click(object sender, RoutedEventArgs e)
+        {
+            var sortedFunc = (IEnumerable<FileSystemInfo> source) => source.OrderByDescending(x => x.Name);
+            _visitor = new FileSystemVisitor(BaseDirectory, sortedFunc);
+            FillTree();
+            HandlerEvent?.Invoke("Filtered file found");
+        }
+
+        private void OrderDateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var sortedFunc = (IEnumerable<FileSystemInfo> source) => source.OrderBy(x => x.CreationTime);
+            _visitor = new FileSystemVisitor(BaseDirectory, sortedFunc);
+            FillTree();
+            HandlerEvent?.Invoke("Filtered file (by date) found");
         }
     }
 }
