@@ -1,5 +1,4 @@
 using Library;
-using Moq;
 using NUnit.Framework;
 using System.IO;
 using System.Linq;
@@ -8,10 +7,7 @@ namespace UnitTests
 {
     public class Tests
     {
-        private static readonly object _lock = new object();
-
         private string _directory;
-        private Mock<DirectoryInfo> _directoryInfo;
 
         [SetUp]
         public void Setup()

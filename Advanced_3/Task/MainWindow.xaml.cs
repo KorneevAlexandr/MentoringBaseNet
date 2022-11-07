@@ -1,5 +1,6 @@
 ﻿using Library;
 using Library.Tree;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,7 +14,9 @@ namespace Task
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string BaseDirectory = "C:\\Users\\Aliaksandr_Karneyeu\\source\\CryptoJack";
+        private const string AppSettingsFile = "appsettings.json";
+
+        private string _baseDirectory;
         private FileSystemVisitor _visitor;
 
         private delegate void Handler(string message);
@@ -23,13 +26,17 @@ namespace Task
         {
             InitializeComponent();
 
+            var settingsData = File.ReadAllText(AppSettingsFile);
+            var settings = JsonConvert.DeserializeObject<Settings>(settingsData);
+            _baseDirectory = settings.BaseDirectory;
+
             HandlerEvent += ShowMessage;
         }
 
         private void FillTree()
         {
             var tree = _visitor.GetTree();
-            var root = new TreeViewItem() { Header = BaseDirectory };
+            var root = new TreeViewItem() { Header = _baseDirectory };
             Tree.Items.Clear();
 
             FillTreeImpl(tree, root);
@@ -62,7 +69,7 @@ namespace Task
 
         private void OrderName_Click(object sender, RoutedEventArgs e)
         {
-            _visitor = new FileSystemVisitor(BaseDirectory);
+            _visitor = new FileSystemVisitor(_baseDirectory);
             FillTree();
             HandlerEvent?.Invoke("Files found");
         }
@@ -70,7 +77,7 @@ namespace Task
         private void OrderDescName_Click(object sender, RoutedEventArgs e)
         {
             var sortedFunc = (IEnumerable<FileSystemInfo> source) => source.OrderByDescending(x => x.Name);
-            _visitor = new FileSystemVisitor(BaseDirectory, sortedFunc);
+            _visitor = new FileSystemVisitor(_baseDirectory, sortedFunc);
             FillTree();
             HandlerEvent?.Invoke("Filtered file found");
         }
@@ -78,7 +85,7 @@ namespace Task
         private void OrderDateBtn_Click(object sender, RoutedEventArgs e)
         {
             var sortedFunc = (IEnumerable<FileSystemInfo> source) => source.OrderBy(x => x.CreationTime);
-            _visitor = new FileSystemVisitor(BaseDirectory, sortedFunc);
+            _visitor = new FileSystemVisitor(_baseDirectory, sortedFunc);
             FillTree();
             HandlerEvent?.Invoke("Filtered file (by date) found");
         }
