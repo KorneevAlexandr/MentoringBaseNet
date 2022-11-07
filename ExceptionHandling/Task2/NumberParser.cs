@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.SymbolStore;
-using System.Linq;
 
 namespace Task2
 {
@@ -38,10 +36,11 @@ namespace Task2
 
             var isMinus = false;
             long numericValue = 0;
+            var trimeredStringValue = stringValue.Trim();
 
-            for (int i = 0; i < stringValue.Trim().Length; i++)
+            for (int i = 0; i < trimeredStringValue.Length; i++)
             {
-                var symbol = stringValue[i];
+                var symbol = trimeredStringValue[i];
 
                 if (i == 0 && symbol.Equals(Minus))
                 {

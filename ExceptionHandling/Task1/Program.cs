@@ -17,7 +17,7 @@ namespace Task1
                 }
                 catch (IndexOutOfRangeException ex)
                 {
-                    Console.WriteLine("Input string was null.");
+                    Console.WriteLine("Input string was empty.");
                 }
                 catch (Exception ex)
                 {
