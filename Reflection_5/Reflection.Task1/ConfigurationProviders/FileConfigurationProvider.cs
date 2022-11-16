@@ -2,7 +2,7 @@
 
 namespace Reflection.Task1.ConfigurationProviders
 {
-    internal class FileConfigurationProvider : ConfigurationProvider
+    public class FileConfigurationProvider : ConfigurationProvider
     {
         private readonly string _filePath;
 
@@ -31,11 +31,6 @@ namespace Reflection.Task1.ConfigurationProviders
             }
 
             Data = data;
-        }
-
-        public override void Set(string key, string? value)
-        {
-            base.Set(key, value);
         }
     }
 }

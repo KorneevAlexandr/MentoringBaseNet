@@ -9,7 +9,7 @@ namespace Reflection.Task1.Models
         public UserConfiguration(IConfigurationRoot configuration) 
             : base(configuration) { }
 
-        [ConfigurationItem(nameof(Id), typeof(FileConfigurationProvider))]
+        [ConfigurationItem(nameof(Id), typeof(AppSettingsConfigurationProvider))]
         public int Id { get; set; }
 
         [ConfigurationItem(nameof(Name), typeof(FileConfigurationProvider))]

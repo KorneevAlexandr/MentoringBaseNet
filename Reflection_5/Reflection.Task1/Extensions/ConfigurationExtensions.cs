@@ -6,11 +6,21 @@ namespace Reflection.Task1.Extensions
 {
     public static class ConfigurationExtensions
     {
-        public static IConfigurationBuilder AddConfigurationProviderFromFile(this IConfigurationBuilder builder, string path)
+        public static IConfigurationBuilder AddFileConfigurationProvider(this IConfigurationBuilder builder, string filePath)
         {
-            ValidateRegisterParameters(builder, path);
+            ValidateRegisterParameters(builder, filePath);
 
-            var source = new FileConfigurationSource(path);
+            var source = new FileConfigurationSource(filePath);
+            builder.Add(source);
+
+            return builder;
+        }
+
+        public static IConfigurationBuilder AddAppSettingsConfigurationProvider(this IConfigurationBuilder builder, string filePath)
+        {
+            ValidateRegisterParameters(builder, filePath);
+
+            var source = new AppSettingsConfigurationSource(filePath);
             builder.Add(source);
 
             return builder;

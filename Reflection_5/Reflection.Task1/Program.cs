@@ -2,9 +2,10 @@
 using Reflection.Task1.Extensions;
 using Reflection.Task1.Models;
 
-var configurationBuilder = new ConfigurationBuilder();
-configurationBuilder.AddConfigurationProviderFromFile("hello.txt");
-var configuration = configurationBuilder.Build();
+var configuration = new ConfigurationBuilder()
+    .AddFileConfigurationProvider("filesettings.txt")
+    .AddAppSettingsConfigurationProvider("appsettings.json")
+    .Build();
 
 var userConfiguration = configuration.GetConfigurationItem<UserConfiguration>();
 Console.ReadLine();
