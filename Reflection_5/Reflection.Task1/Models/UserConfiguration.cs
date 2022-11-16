@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Reflection.Task1.Attributes;
-using Reflection.Task1.ConfigurationProviders;
+using Reflection.Task1.DllLoaders;
 
 namespace Reflection.Task1.Models
 {
@@ -9,16 +9,16 @@ namespace Reflection.Task1.Models
         public UserConfiguration(IConfigurationRoot configuration) 
             : base(configuration) { }
 
-        [ConfigurationItem(nameof(Id), typeof(AppSettingsConfigurationProvider))]
+        [ConfigurationItem(nameof(Id), ConfigurationProviderLoader.AppSettingsConfigurationProviderName)]
         public int Id { get; set; }
 
-        [ConfigurationItem(nameof(Name), typeof(FileConfigurationProvider))]
+        [ConfigurationItem(nameof(Name), ConfigurationProviderLoader.FileConfigurationProviderName)]
         public string Name { get; set; }
 
-        [ConfigurationItem(nameof(Surname), typeof(FileConfigurationProvider))]
+        [ConfigurationItem(nameof(Surname), ConfigurationProviderLoader.FileConfigurationProviderName)]
         public string Surname { get; set; }
 
-        [ConfigurationItem(nameof(Age), typeof(FileConfigurationProvider))]
+        [ConfigurationItem(nameof(Age), ConfigurationProviderLoader.FileConfigurationProviderName)]
         public int Age { get; set; }
     }
 }

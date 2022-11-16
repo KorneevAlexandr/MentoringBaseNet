@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 
-namespace Reflection.Task1.ConfigurationProviders
+namespace Reflection.Providers.ConfigurationProviders
 {
     internal class AppSettingsConfigurationProvider : ConfigurationProvider
     {

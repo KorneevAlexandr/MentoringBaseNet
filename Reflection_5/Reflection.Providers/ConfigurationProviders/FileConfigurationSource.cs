@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Reflection.Task1.ConfigurationProviders
+namespace Reflection.Providers.ConfigurationProviders
 {
     public class FileConfigurationSource : IConfigurationSource
     {

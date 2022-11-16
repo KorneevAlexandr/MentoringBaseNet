@@ -2,7 +2,7 @@
 {
     public class ConfigurationItemAttribute : Attribute
     {
-        public ConfigurationItemAttribute(string configurationItemName, Type configurationProviderType)
+        public ConfigurationItemAttribute(string configurationItemName, string configurationProviderType)
         {
             ConfigurationItemName = configurationItemName;
             ConfigurationProviderType = configurationProviderType;
@@ -10,6 +10,6 @@
 
         public string ConfigurationItemName { get; }
 
-        public Type ConfigurationProviderType { get; }
+        public string ConfigurationProviderType { get; }
     }
 }

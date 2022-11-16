@@ -34,7 +34,7 @@ namespace Reflection.Task1.Models
 
         private void SaveValueForPropety(PropertyInfo property, ConfigurationItemAttribute itemAttribute)
         {
-            var provider = Configuration.Providers.First(p => p.GetType() == itemAttribute.ConfigurationProviderType);
+            var provider = Configuration.Providers.First(p => p.GetType().Name.Equals(itemAttribute.ConfigurationProviderType));
 
             if (provider == null)
             {
