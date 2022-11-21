@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using System;
-using Task1;
 
 namespace Task1.Tests
 {

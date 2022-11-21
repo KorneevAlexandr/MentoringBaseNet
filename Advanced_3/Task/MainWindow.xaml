@@ -1,0 +1,17 @@
+﻿<Window x:Class="Task.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Task"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Name="MainGrid">
+        <TreeView Name="Tree" Margin="10,10,156,10"/>
+        <Button Name="OrderName" Click="OrderName_Click" Content="Order name" HorizontalAlignment="Left" Margin="664,10,0,0" VerticalAlignment="Top" Height="23" Width="117"/>
+        <Button Name="OrderDescName" Click="OrderDescName_Click" Content="Order desc name" HorizontalAlignment="Left" Margin="664,48,0,0" VerticalAlignment="Top" Height="23" Width="117"/>
+        <Button Name="OrderDateBtn" Click="OrderDateBtn_Click" Content="Order date" HorizontalAlignment="Left" Margin="664,84,0,0" VerticalAlignment="Top" Height="23" Width="117"/>
+        <TextBlock FontSize="20px" Name="Log" HorizontalAlignment="Left" Margin="664,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="120" Width="117"/>
+
+    </Grid>
+</Window>
