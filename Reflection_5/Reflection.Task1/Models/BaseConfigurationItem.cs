@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Reflection.Task1.Attributes;
+using Reflection.Task1.Extensions;
 using System.Reflection;
 
 namespace Reflection.Task1.Models
@@ -43,11 +44,18 @@ namespace Reflection.Task1.Models
 
             if (provider.TryGet(itemAttribute.ConfigurationItemName, out string value))
             {
-                object typedValue;
+                object typedValue = null;
 
                 try
                 {
-                    typedValue = Convert.ChangeType(value, property.PropertyType);
+                    if (property.PropertyType.IsDefault())
+                    {
+                        typedValue = Convert.ChangeType(value, property.PropertyType);
+                    }
+                    else
+                    {
+                        TimeSpan.Parse(value);
+                    }
                 }
                 catch
                 {

@@ -20,5 +20,8 @@ namespace Reflection.Task1.Models
 
         [ConfigurationItem(nameof(Age), ConfigurationProviderLoader.FileConfigurationProviderName)]
         public int Age { get; set; }
+
+        [ConfigurationItem(nameof(Time), ConfigurationProviderLoader.FileConfigurationProviderName)]
+        public TimeSpan Time { get; set; }
     }
 }
