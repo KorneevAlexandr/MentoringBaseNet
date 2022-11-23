@@ -7,8 +7,8 @@ namespace Tasks
 {
     public class DoublyLinkedList<T> : IDoublyLinkedList<T>
     {
-        private Node _firstNode;
-        private Node _lastNode;
+        private LinkedNode<T> _firstNode;
+        private LinkedNode<T> _lastNode;
         private int _length;
 
         public int Length => _length;
@@ -17,12 +17,12 @@ namespace Tasks
         {
             if (_firstNode == null)
             {
-                _firstNode = new Node(e, null, null);
+                _firstNode = new LinkedNode<T>(e, null, null);
                 _lastNode = _firstNode;
             }
             else
             {
-                _lastNode.Next = new Node(e, _lastNode, null);
+                _lastNode.Next = new LinkedNode<T>(e, _lastNode, null);
                 _lastNode = _lastNode.Next;
             }
 
@@ -39,7 +39,7 @@ namespace Tasks
             {
                 var currentNode = NodeAt(index);
                 var previousNode = currentNode.Previous;
-                var newNode = new Node(e, previousNode, currentNode);
+                var newNode = new LinkedNode<T>(e, previousNode, currentNode);
                 currentNode.Previous = newNode;
                 _length++;
                 
@@ -96,14 +96,14 @@ namespace Tasks
             return new Enumerator(_firstNode);
         }
 
-        private Node NodeAt(int index)
+        private LinkedNode<T> NodeAt(int index)
         {
             if (index < 0 || index >= _length)
             {
                 throw new IndexOutOfRangeException("Specified index was out of range.");
             }
 
-            Node resultNode = _firstNode;
+            LinkedNode<T> resultNode = _firstNode;
 
             for (int i = 0; i < index; i++)
             {
@@ -113,7 +113,7 @@ namespace Tasks
             return resultNode;
         }
 
-        private void RemoveNode(Node node)
+        private void RemoveNode(LinkedNode<T> node)
         {
             var previousNode = node.Previous;
             var nextNode = node.Next;
@@ -139,11 +139,11 @@ namespace Tasks
 
         private struct Enumerator : IEnumerator<T>, IEnumerator
         {
-            private Node _firstNode;
-            private Node _current;
+            private LinkedNode<T> _firstNode;
+            private LinkedNode<T> _current;
             private bool _isFirstStep;
 
-            public Enumerator(Node firstNode)
+            public Enumerator(LinkedNode<T> firstNode)
             {
                 _firstNode = firstNode;
                 _current = null;
@@ -182,22 +182,6 @@ namespace Tasks
 
             public void Dispose()
             { }
-        }
-
-        private class Node
-        {
-            public Node(T value, Node previous, Node next)
-            {
-                Value = value;
-                Previous = previous;
-                Next = next;
-            }
-
-            public T Value { get; set; }
-
-            public Node Previous { get; set; }
-
-            public Node Next { get; set; }
         }
     }
 }
