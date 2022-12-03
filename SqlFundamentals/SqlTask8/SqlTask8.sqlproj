@@ -58,9 +58,12 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
     <Folder Include="Constraints" />
+    <Folder Include="Views" />
+    <Folder Include="Post" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Person.sql" />
+    <Build Include="Views\EmployeeInfo.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Tables\Address.sql" />
@@ -68,5 +71,8 @@
     <None Include="Tables\Company.sql" />
     <None Include="Constraints\CompanyFKs.sql" />
     <None Include="Constraints\EmployeeFKs.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Post\PostDeploymentData.sql" />
   </ItemGroup>
 </Project>
