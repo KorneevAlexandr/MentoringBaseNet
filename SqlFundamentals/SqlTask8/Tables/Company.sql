@@ -1,0 +1,7 @@
+﻿CREATE TABLE Company
+(
+	Id INT PRIMARY KEY NOT NULL,
+	Name NVARCHAR(20) NOT NULL,
+	AddressId INT NOT NULL
+	FOREIGN KEY (AddressId) REFERENCES Address (Id)
+);
