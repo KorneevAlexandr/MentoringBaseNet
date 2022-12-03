@@ -61,7 +61,7 @@ namespace Tasks
 
         public IEnumerator<T> GetEnumerator()
         {
-            return new Enumerator(_firstNode);
+            return new LinkedEnumerator<T>(_firstNode);
         }
 
         public void Remove(T item)
@@ -93,7 +93,7 @@ namespace Tasks
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new Enumerator(_firstNode);
+            return new LinkedEnumerator<T>(_firstNode);
         }
 
         private LinkedNode<T> NodeAt(int index)
@@ -135,53 +135,6 @@ namespace Tasks
             {
                 _lastNode.Previous = previousNode;
             }
-        }
-
-        private struct Enumerator : IEnumerator<T>, IEnumerator
-        {
-            private LinkedNode<T> _firstNode;
-            private LinkedNode<T> _current;
-            private bool _isFirstStep;
-
-            public Enumerator(LinkedNode<T> firstNode)
-            {
-                _firstNode = firstNode;
-                _current = null;
-                _isFirstStep = true;
-            }
-
-            public T Current => _current.Value;
-
-            object IEnumerator.Current => _current.Value;
-
-            public bool MoveNext()
-            {
-                if (_isFirstStep)
-                {
-                    _current = _firstNode;
-                    _isFirstStep = false;
-
-                    return true;
-                }
-
-                if (_current == null || _current.Next == null)
-                {
-                    return false;
-                }
-
-                _current = _current.Next;
-
-                return true;
-            }
-
-            public void Reset()
-            {
-                _isFirstStep = true;
-                _current = null;
-            }
-
-            public void Dispose()
-            { }
         }
     }
 }
