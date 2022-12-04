@@ -47,9 +47,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reflection.Task1", "Reflect
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logging", "Logging", "{70CB7498-F1C8-45B2-9FD2-F2C1C1F495BD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrainstormSessions", "..\Logging\Logging\BrainstormSessions\BrainstormSessions.csproj", "{A3EF5954-407D-4838-971D-0CAAB0A022DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrainstormSessions", "Logging\BrainstormSessions\BrainstormSessions.csproj", "{A3EF5954-407D-4838-971D-0CAAB0A022DD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrainstormSessions.Test", "..\Logging\Logging\BrainstormSessions.Test\BrainstormSessions.Test.csproj", "{70F2F44C-0916-42AB-9C1A-61CA7BBC9EAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrainstormSessions.Test", "Logging\BrainstormSessions.Test\BrainstormSessions.Test.csproj", "{70F2F44C-0916-42AB-9C1A-61CA7BBC9EAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

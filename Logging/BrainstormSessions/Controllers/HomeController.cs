@@ -6,6 +6,7 @@ using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
 using BrainstormSessions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace BrainstormSessions.Controllers
 {
@@ -30,6 +31,8 @@ namespace BrainstormSessions.Controllers
                 IdeaCount = session.Ideas.Count
             });
 
+            Log.Information("User get sessions");
+
             return View(model);
         }
 
@@ -44,6 +47,7 @@ namespace BrainstormSessions.Controllers
         {
             if (!ModelState.IsValid)
             {
+                Log.Warning("User try to create invalid session");
                 return BadRequest(ModelState);
             }
             else
