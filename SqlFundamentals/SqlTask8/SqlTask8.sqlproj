@@ -60,10 +60,12 @@
     <Folder Include="Constraints" />
     <Folder Include="Views" />
     <Folder Include="Post" />
+    <Folder Include="StoredProcedure" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Person.sql" />
     <Build Include="Views\EmployeeInfo.sql" />
+    <Build Include="StoredProcedure\InsertEmployee.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Tables\Address.sql" />
