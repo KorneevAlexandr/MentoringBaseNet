@@ -25,7 +25,7 @@ IF coalesce(TRIM(@employeeName), '') = '' AND
 
 IF LEN(@companyName) > 20
 	BEGIN
-		SET @isRollBack = 1;
+		SET @companyName = LEFT(@companyName, 20);
 	END
 
 IF @isRollBack = 0
