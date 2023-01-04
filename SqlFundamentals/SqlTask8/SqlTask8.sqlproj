@@ -61,11 +61,13 @@
     <Folder Include="Views" />
     <Folder Include="Post" />
     <Folder Include="StoredProcedure" />
+    <Folder Include="Triggers" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Person.sql" />
     <Build Include="Views\EmployeeInfo.sql" />
     <Build Include="StoredProcedure\InsertEmployee.sql" />
+    <Build Include="Triggers\InsertAddressFromEmployee.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Tables\Address.sql" />
