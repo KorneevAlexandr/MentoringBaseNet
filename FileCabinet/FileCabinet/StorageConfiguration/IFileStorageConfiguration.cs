@@ -2,6 +2,6 @@
 {
     public interface IFileStorageConfiguration
     {
-        public string DirectoryPath { get; }
+        string DirectoryPath { get; }
     }
 }

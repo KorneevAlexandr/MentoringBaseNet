@@ -6,7 +6,7 @@ namespace FileCabinet.Services
     public class DocumentService<T> : IDocumentService<T>
         where T : DocumentBase
     {
-        protected readonly IRepository<T> _repository;
+        private readonly IRepository<T> _repository;
 
         // TODO: caching
 
@@ -55,6 +55,11 @@ namespace FileCabinet.Services
         public void Delete(T entity)
         {
             _repository.Delete(entity);
+        }
+
+        public void Delete(string id)
+        {
+            _repository.Delete(GetById(id));
         }
     }
 }

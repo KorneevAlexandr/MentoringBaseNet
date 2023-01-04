@@ -1,10 +1,4 @@
 ﻿using FileCabinet.Domain;
-using FileCabinet.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FileCabinet.Services
 {
@@ -22,5 +16,7 @@ namespace FileCabinet.Services
         void Update(T entity);
 
         void Delete(T entity);
+
+        void Delete(string id);
     }
 }
