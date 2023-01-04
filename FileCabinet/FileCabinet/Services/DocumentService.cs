@@ -6,7 +6,7 @@ namespace FileCabinet.Services
     public class DocumentService<T> : IDocumentService<T>
         where T : DocumentBase
     {
-        private readonly IRepository<T> _repository;
+        protected readonly IRepository<T> _repository;
 
         // TODO: caching
 

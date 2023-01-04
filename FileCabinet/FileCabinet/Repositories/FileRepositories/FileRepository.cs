@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using FileCabinet.Domain;
 using FileCabinet.StorageConfiguration;
+using System.Collections.Concurrent;
 
 namespace FileCabinet.Repositories.FileRepositories
 {
@@ -22,7 +23,7 @@ namespace FileCabinet.Repositories.FileRepositories
             var directoryInfo = new DirectoryInfo(_fileStorageConfiguration.DirectoryPath);
             var files = directoryInfo.GetFiles().Where(f => f.Name.Contains(_entityType));
 
-            var documents = ImmutableList<T>.Empty;
+            var documents = new ConcurrentBag<T>();
 
             Parallel.ForEach(files, file =>
             {
@@ -33,7 +34,7 @@ namespace FileCabinet.Repositories.FileRepositories
                 documents.Add(JsonConvert.DeserializeObject<T>(content));
             });
 
-            return documents;
+            return documents.ToList();
         }
 
         public T GetById(string id)
@@ -76,6 +77,6 @@ namespace FileCabinet.Repositories.FileRepositories
             fileInfo.Delete();
         }
 
-        private string GetFilePath(T entity) => $"{_fileStorageConfiguration}{entity.Type}#{entity.Id}.json";
+        private string GetFilePath(T entity) => $"{_fileStorageConfiguration.DirectoryPath}{entity.Type}#{entity.Id}.json";
     }
 }

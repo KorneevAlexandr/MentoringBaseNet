@@ -1,6 +1,6 @@
 ﻿namespace FileCabinet.Domain
 {
-    public class LocalBook : DocumentBase
+    public class LocalBook : DocumentBase, IIsbn
     {
         public LocalBook()
             : base(nameof(DocumentTypes.LocalBook))
