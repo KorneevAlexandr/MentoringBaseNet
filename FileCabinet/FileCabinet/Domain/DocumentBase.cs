@@ -10,7 +10,7 @@ namespace FileCabinet.Domain
         }
 
         [JsonIgnore]
-        public string Type { get; }
+        public string Type { get; private set; }
 
         public string Id { get; set; }
 

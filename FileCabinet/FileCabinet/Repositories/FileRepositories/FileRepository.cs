@@ -6,19 +6,21 @@ using FileCabinet.StorageConfiguration;
 namespace FileCabinet.Repositories.FileRepositories
 {
     public class FileRepository<T> : IRepository<T>
-        where T : DocumentBase
+        where T : DocumentBase, new()
     {
         private readonly IFileStorageConfiguration _fileStorageConfiguration;
+        private readonly string _entityType;
 
         public FileRepository(IFileStorageConfiguration fileStorageConfiguration)
         {
             _fileStorageConfiguration = fileStorageConfiguration;
+            _entityType = new T().Type;
         }
 
         public IEnumerable<T> GetAll()
         {
             var directoryInfo = new DirectoryInfo(_fileStorageConfiguration.DirectoryPath);
-            var files = directoryInfo.GetFiles();
+            var files = directoryInfo.GetFiles().Where(f => f.Name.Contains(_entityType));
 
             var documents = ImmutableList<T>.Empty;
 
