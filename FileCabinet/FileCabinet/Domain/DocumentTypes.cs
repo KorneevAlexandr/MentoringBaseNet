@@ -4,6 +4,7 @@
     {
         Patent = 1,
         Book,
-        LocalBook
+        LocalBook,
+        Magazine
     }
 }

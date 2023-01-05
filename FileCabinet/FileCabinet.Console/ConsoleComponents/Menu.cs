@@ -5,18 +5,21 @@ namespace FileCabinet.Console.ConsoleComponents
 {
     internal class Menu : IMenu
     {
-        private readonly IDocumentComponent<Patent> _patentComponent;
         private readonly IIsbnDocumentComponent<Book> _bookComponent;
         private readonly IIsbnDocumentComponent<LocalBook> _localBookComponent;
+        private readonly IDocumentComponent<Patent> _patentComponent;
+        private readonly IDocumentComponent<Magazine> _magazineComponent;
 
         public Menu(
-            IDocumentComponent<Patent> patentComponent,
             IIsbnDocumentComponent<Book> bookComponent,
-            IIsbnDocumentComponent<LocalBook> localBookComponent)
+            IIsbnDocumentComponent<LocalBook> localBookComponent,
+            IDocumentComponent<Patent> patentComponent,
+            IDocumentComponent<Magazine> magazineComponent)
         {
-            _patentComponent = patentComponent;
             _bookComponent = bookComponent;
             _localBookComponent = localBookComponent;
+            _patentComponent = patentComponent;
+            _magazineComponent = magazineComponent; 
         }
 
         public void Show()
@@ -39,6 +42,9 @@ namespace FileCabinet.Console.ConsoleComponents
                         _localBookComponent.Show();
                         break;
                     case "4":
+                        _magazineComponent.Show();
+                        break;
+                    case "5":
                         break;
                     default:
                         break;
@@ -54,7 +60,8 @@ namespace FileCabinet.Console.ConsoleComponents
             System.Console.WriteLine("1) Patents");
             System.Console.WriteLine("2) Books");
             System.Console.WriteLine("3) Localazed books");
-            System.Console.WriteLine("4) Exit");
+            System.Console.WriteLine("4) Magazines");
+            System.Console.WriteLine("5) Exit");
             System.Console.Write("\n> ");
 
             return System.Console.ReadLine();

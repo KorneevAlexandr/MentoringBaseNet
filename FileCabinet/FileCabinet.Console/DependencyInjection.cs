@@ -34,6 +34,7 @@ namespace FileCabinet.Console
             serviceCollection.AddScoped<IDocumentFormatter<Book>, BookFormatter>();
             serviceCollection.AddScoped<IDocumentFormatter<LocalBook>, LocalBookFormatter>();
             serviceCollection.AddScoped<IDocumentFormatter<Patent>, PatentFormatter>();
+            serviceCollection.AddScoped<IDocumentFormatter<Magazine>, MagazineFormatter>();
 
             return serviceCollection.BuildServiceProvider();
         }
