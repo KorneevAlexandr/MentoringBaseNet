@@ -3,7 +3,7 @@
     public class Patent : DocumentBase
     {
         public Patent()
-            : base(nameof(DocumentTypes.Patent))
+            : base(typeof(Patent).Name)
         { }
 
         public string Authors { get; set; }

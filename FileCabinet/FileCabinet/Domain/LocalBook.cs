@@ -3,7 +3,7 @@
     public class LocalBook : DocumentBase, IIsbn
     {
         public LocalBook()
-            : base(nameof(DocumentTypes.LocalBook))
+            : base(typeof(LocalBook).Name)
         { }
 
         public string Isbn { get; set; }

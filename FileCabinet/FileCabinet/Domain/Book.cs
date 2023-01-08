@@ -3,7 +3,7 @@
     public class Book : DocumentBase, IIsbn
     {
         public Book() 
-            : base(nameof(DocumentTypes.Book))
+            : base(typeof(Book).Name)
         { }
 
         public string Isbn { get; set; }

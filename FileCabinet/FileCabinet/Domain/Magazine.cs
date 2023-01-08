@@ -3,7 +3,7 @@
     public class Magazine : DocumentBase
     {
         public Magazine()
-            : base(nameof(DocumentTypes.Magazine))
+            : base(typeof(Magazine).Name)
         { }
 
         public int ReleaseNumber { get; set; }

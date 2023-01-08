@@ -1,4 +1,5 @@
-﻿using FileCabinet.Console.ConsoleComponents;
+﻿using FileCabinet.Caching;
+using FileCabinet.Console.ConsoleComponents;
 using FileCabinet.Console.ConsoleComponents.DocumentComponents;
 using FileCabinet.Console.ConsoleComponents.DocumentFormatters;
 using FileCabinet.Domain;
@@ -14,6 +15,7 @@ namespace FileCabinet.Console
     public static class DependencyInjection
     {
         private const string StoragePathSectionName = "StoragePath";
+        private const string CachingOptionsSectionName = "CachingOptions";
 
         public static IServiceProvider GetServiceProvider()
         {
@@ -22,6 +24,10 @@ namespace FileCabinet.Console
             var configuration = GetConfiguration();
 
             serviceCollection.AddSingleton<IFileStorageConfiguration>(new FileStorageConfiguration(configuration.GetValue<string>(StoragePathSectionName)));
+
+            serviceCollection.AddMemoryCache();
+
+            serviceCollection.Configure<CachingOptions>(configuration.GetSection(CachingOptionsSectionName));
 
             serviceCollection.AddScoped(typeof(IRepository<>), typeof(FileRepository<>));
             serviceCollection.AddScoped(typeof(IDocumentService<>), typeof(DocumentService<>));
