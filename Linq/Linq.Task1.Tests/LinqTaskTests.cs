@@ -68,7 +68,7 @@ namespace Linq.Task1.Tests
             Assert.That(() => LinqTask.Linq2UsingGroup(null, null).ToList(), Throws.ArgumentNullException);
         }
 
-        [TestCase(800, ExpectedResult = 2)]
+        [TestCase(800, ExpectedResult = 2)] // not exist in data source!
         [TestCase(0, ExpectedResult = 6)]
         [TestCase(-1, ExpectedResult = 6)]
         [TestCase(1, ExpectedResult = 5)]
