@@ -11,8 +11,8 @@
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>Database1</RootNamespace>
-    <AssemblyName>Database1</AssemblyName>
+    <RootNamespace>AdoNetTask</RootNamespace>
+    <AssemblyName>AdoNetTask</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
@@ -56,5 +56,14 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="Tables" />
+    <Folder Include="Constraints" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\Products.sql" />
+    <Build Include="Tables\Orders.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Constraints\FK_Orders_Product.sql" />
   </ItemGroup>
 </Project>
