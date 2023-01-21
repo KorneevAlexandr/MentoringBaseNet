@@ -1,6 +1,8 @@
 ﻿using AdoNetTask.Connection;
 using AdoNetTask.Models;
+using AdoNetTask.QueryBuilders;
 using Microsoft.Data.SqlClient;
+using System.Transactions;
 
 namespace AdoNetTask.Repositories
 {
@@ -52,6 +54,31 @@ namespace AdoNetTask.Repositories
             command.Dispose();
 
             return order;
+        }
+
+        public IEnumerable<Order> GetBy(OrderStatus? status = null, int? month = null, int? year = null, int? productId = null)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            var command = new QueryConditionBuilder("SELECT * FROM Orders")
+                .AddCondition(nameof(status), status)
+                .AddCondition(nameof(productId), productId)
+                .AddSpecificCondition("MONTH(`CreatedDate`)", nameof(month), month)
+                .AddSpecificCondition("YEAR(`CreatedDate`)", nameof(year), year)
+                .Build();
+
+            connection.Open();
+            var reader = command.ExecuteReader();
+            var orders = new List<Order>();
+
+            while (reader.Read())
+            {
+                orders.Add(MapOrder(reader));
+            }
+
+            reader.Close();
+            command.Dispose();
+
+            return orders;
         }
 
         public void Create(Order order)
@@ -111,8 +138,34 @@ namespace AdoNetTask.Repositories
             command.Dispose();
         }
 
+        public void BulkDelete(OrderStatus? status = null, int? month = null, int? year = null, int? productId = null)
+        {
+            using var transactionScope = new TransactionScope();
+            using var connection = new SqlConnection(_connectionString);
+
+            var command = new QueryConditionBuilder("DELETE FROM Orders")
+                .AddCondition(nameof(status), status)
+                .AddCondition(nameof(productId), productId)
+                .AddSpecificCondition("MONTH(`CreatedDate`)", nameof(month), month)
+                .AddSpecificCondition("YEAR(`CreatedDate`)", nameof(year), year)
+                .Build();
+
+            try
+            {
+                connection.Open();
+                command.ExecuteNonQuery();
+                transactionScope.Complete();
+            }
+            catch
+            {
+                transactionScope.Dispose();
+            }
+
+            command.Dispose();
+        }
+
         private static Order MapOrder(SqlDataReader reader) =>
-            new Order()
+            new()
             {
                 Id = reader.GetInt32(0),
                 Status = (OrderStatus)reader.GetInt32(1),

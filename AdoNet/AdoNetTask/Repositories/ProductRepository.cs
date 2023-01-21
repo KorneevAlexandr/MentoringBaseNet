@@ -16,7 +16,7 @@ namespace AdoNetTask.Repositories
         public IEnumerable<Product> GetAll()
         {
             using var connection = new SqlConnection(_connectionString);
-            var command = new SqlCommand("SELECT * FROM Products", connection);
+            using var command = new SqlCommand("SELECT * FROM Products", connection);
 
             connection.Open();
             var reader = command.ExecuteReader();
@@ -28,7 +28,6 @@ namespace AdoNetTask.Repositories
             }
 
             reader.Close();
-            command.Dispose();
 
             return products;
         }
@@ -36,11 +35,11 @@ namespace AdoNetTask.Repositories
         public Product GetById(int id)
         {
             using var connection = new SqlConnection(_connectionString);
-            var command = new SqlCommand("SELECT * FROM Products WHERE Id = @id", connection);
+            using var command = new SqlCommand("SELECT * FROM Products WHERE Id = @id", connection);
             command.Parameters.AddWithValue("@id", id);
 
             connection.Open();
-            var reader = command.ExecuteReader();
+            using var reader = command.ExecuteReader();
 
             Product product = null;
 
@@ -49,16 +48,13 @@ namespace AdoNetTask.Repositories
                 product = MapProduct(reader);
             }
 
-            reader.Close();
-            command.Dispose();
-
             return product;
         }
 
         public void Create(Product product)
         {
             using var connection = new SqlConnection(_connectionString);
-            var command = new SqlCommand
+            using var command = new SqlCommand
             {
                 Connection = connection,
                 CommandText = "INSERT INTO Products VALUES (@name, @description, @weight, @height, @width, @length)"
@@ -73,13 +69,12 @@ namespace AdoNetTask.Repositories
 
             connection.Open();
             command.ExecuteNonQuery();
-            command.Dispose();
         }
 
         public void Update(Product product)
         {
             using var connection = new SqlConnection(_connectionString);
-            var command = new SqlCommand
+            using var command = new SqlCommand
             {
                 Connection = connection,
                 CommandText = "UPDATE Products " +
@@ -97,13 +92,12 @@ namespace AdoNetTask.Repositories
 
             connection.Open();
             command.ExecuteNonQuery();
-            command.Dispose();
         }
 
         public void Delete(int id)
         {
             using var connection = new SqlConnection(_connectionString);
-            var command = new SqlCommand
+            using var command = new SqlCommand
             {
                 Connection = connection,
                 CommandText = "DELETE FROM Products WHERE Id = (@id)"
@@ -113,7 +107,6 @@ namespace AdoNetTask.Repositories
 
             connection.Open();
             command.ExecuteNonQuery();
-            command.Dispose();
         }
 
         private static Product MapProduct(SqlDataReader reader) =>

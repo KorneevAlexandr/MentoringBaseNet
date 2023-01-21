@@ -3,6 +3,6 @@
 	Id INT PRIMARY KEY IDENTITY,
 	Status INT,
 	CreatedDate DATETIME,
-	UpdatedData DATETIME,
+	UpdatedDate DATETIME,
 	ProductId INT
 );
