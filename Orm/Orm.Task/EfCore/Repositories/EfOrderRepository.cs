@@ -1,14 +1,12 @@
-﻿using LinqToDB;
-using Orm.Task.Interfaces.Repositories;
+﻿using Orm.Task.Interfaces.Repositories;
 using Orm.Task.Models;
 using System.Linq;
-using System.Transactions;
 
-namespace Orm.Task.LinqToDb.Repositories
+namespace Orm.Task.EfCore.Repositories
 {
-    public class OrderRepository : Repository<Order>, IOrderRepository, IRepository<Order>
+    public class EfOrderRepository : EfRepository<Order>, IOrderRepository, IRepository<Order>
     {
-        public OrderRepository(LinqToDbDataContext context) 
+        public EfOrderRepository(EfCoreDataContext context) 
             : base(context)
         { }
 
@@ -38,12 +36,14 @@ namespace Orm.Task.LinqToDb.Repositories
 
         public void BulkDelete(OrderStatus? status = null, int? month = null, int? year = null, int? productId = null)
         {
-            using var transactionScope = new TransactionScope();
+            using var transaction = _context.Database.BeginTransaction();
 
             try
             {
-                GetBy(status, month, year, productId).Delete();
-                transactionScope.Complete();
+                var orders = GetBy(status, month, year, productId);
+                _dbSet.RemoveRange(orders);
+                _context.SaveChanges();
+                transaction.Commit();
             }
             catch
             { }
@@ -51,12 +51,8 @@ namespace Orm.Task.LinqToDb.Repositories
 
         public void Update(Order order)
         {
-            GetAll().Where(x => x.Id == order.Id)
-                .Set(x => x.CreatedDate, order.CreatedDate)
-                .Set(x => x.UpdatedDate, order.UpdatedDate)
-                .Set(x => x.Status, order.Status)
-                .Set(x => x.ProductId, order.ProductId)
-                .Update();
+            _context.Orders.Update(order);
+            _context.SaveChanges();
         }
     }
 }

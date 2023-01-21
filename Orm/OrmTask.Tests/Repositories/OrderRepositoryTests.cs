@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using Orm.Task.Interfaces.Repositories;
-using Orm.Task.LinqToDb.Repositories;
 using Orm.Task.Models;
 using OrmTask.Tests.Helpers;
 
@@ -25,10 +24,10 @@ namespace OrmTask.Tests.Repositories
         public static IEnumerable<object> Repositories => new List<object>
         {
             DatabaseHelper.OrderRepository,
-            // EF Repo
+            DatabaseHelper.EfOrderRepository
         };
 
-        private static List<Order> Orders = new()
+        private static readonly List<Order> Orders = new()
         {
             new Order { CreatedDate = new DateTime(2000, 1, 1), UpdatedDate = DateTime.Today, Status = OrderStatus.Arrived },
             new Order { CreatedDate = new DateTime(2000, 1, 1), UpdatedDate = DateTime.Today, Status = OrderStatus.NotStarted },
@@ -60,6 +59,20 @@ namespace OrmTask.Tests.Repositories
             new object[] { DatabaseHelper.OrderRepository, new List<Order> { Orders[4], Orders[5], Orders[10], Orders[11] }, null, null, 3, null },
             new object[] { DatabaseHelper.OrderRepository, new List<Order> { }, null, null, null, -1 },
             new object[] { DatabaseHelper.OrderRepository, Orders, null, null, null, null },
+            new object[] { DatabaseHelper.EfOrderRepository, new List<Order> { Orders[0], Orders[6] }, OrderStatus.Arrived, null, 1, null },
+            new object[] { DatabaseHelper.EfOrderRepository, new List<Order> { Orders[1] }, OrderStatus.NotStarted, 2000, null, null },
+            new object[] { DatabaseHelper.EfOrderRepository, new List<Order> { Orders[2] }, OrderStatus.Loading, 2000, 2, null },
+            new object[] { DatabaseHelper.EfOrderRepository, new List<Order> { Orders[3], Orders[9] }, OrderStatus.Cancelled, null, null, null },
+            new object[] { DatabaseHelper.EfOrderRepository, new List<Order> { }, OrderStatus.Done, 1999, 10, null },
+            new object[] { DatabaseHelper.EfOrderRepository, new List<Order> { Orders[5], Orders[11] }, OrderStatus.InProgress, null, 3, null },
+            new object[] { DatabaseHelper.EfOrderRepository, new List<Order> { }, null, 1999, null, null },
+            new object[] { DatabaseHelper.EfOrderRepository, new List<Order> { Orders[0], Orders[1], Orders[2], Orders[3], Orders[4], Orders[5] }, null, 2000, null, null },
+            new object[] { DatabaseHelper.EfOrderRepository, new List<Order> { Orders[6], Orders[7], Orders[8], Orders[9], Orders[10], Orders[11] }, null, 2001, null, null },
+            new object[] { DatabaseHelper.EfOrderRepository, new List<Order> { Orders[0], Orders[1] }, null, 2000, 1, null },
+            new object[] { DatabaseHelper.EfOrderRepository, new List<Order> { Orders[8], Orders[9] }, null, 2001, 2, null },
+            new object[] { DatabaseHelper.EfOrderRepository, new List<Order> { Orders[4], Orders[5], Orders[10], Orders[11] }, null, null, 3, null },
+            new object[] { DatabaseHelper.EfOrderRepository, new List<Order> { }, null, null, null, -1 },
+            new object[] { DatabaseHelper.EfOrderRepository, Orders, null, null, null, null }
         };
 
         [TestCaseSource(nameof(GetByParameters))]

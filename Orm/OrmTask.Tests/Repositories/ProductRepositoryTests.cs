@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using Orm.Task.Interfaces.Repositories;
-using Orm.Task.LinqToDb.Repositories;
 using Orm.Task.Models;
 using OrmTask.Tests.Helpers;
 
@@ -25,7 +24,7 @@ namespace OrmTask.Tests.Repositories
         public static IEnumerable<object> Repositories => new List<object>
         {
             DatabaseHelper.ProductRepository,
-            // EF Repo
+            DatabaseHelper.EfProductRepository
         };
 
         [TestCaseSource(nameof(Repositories))]

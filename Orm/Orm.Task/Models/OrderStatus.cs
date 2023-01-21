@@ -1,6 +1,6 @@
 ﻿namespace Orm.Task.Models
 {
-    public enum OrderStatus : byte
+    public enum OrderStatus : int
     {
         NotStarted = 0,
         Loading = 1,

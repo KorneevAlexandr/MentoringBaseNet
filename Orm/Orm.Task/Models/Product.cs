@@ -1,10 +1,13 @@
 ﻿using LinqToDB.Mapping;
+using Annotations = System.ComponentModel.DataAnnotations;
 
 namespace Orm.Task.Models
 {
     [Table("Products")]
     public class Product : IDbModel
     {
+        [Annotations.Key]
+        [Annotations.Schema.DatabaseGenerated(Annotations.Schema.DatabaseGeneratedOption.Identity)]
         [Identity]
         [Column(nameof(Id))]
         public int Id { get; set; }
