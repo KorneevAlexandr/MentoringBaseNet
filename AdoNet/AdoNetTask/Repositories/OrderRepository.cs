@@ -18,19 +18,16 @@ namespace AdoNetTask.Repositories
         public IEnumerable<Order> GetAll()
         {
             using var connection = new SqlConnection(_connectionString);
-            var command = new SqlCommand("SELECT * FROM Orders", connection);
+            using var command = new SqlCommand("SELECT * FROM Orders", connection);
 
             connection.Open();
-            var reader = command.ExecuteReader();
+            using var reader = command.ExecuteReader();
             var orders = new List<Order>();
 
             while (reader.Read())
             {
                 orders.Add(MapOrder(reader));
             }
-
-            reader.Close();
-            command.Dispose();
 
             return orders;
         }
@@ -38,11 +35,11 @@ namespace AdoNetTask.Repositories
         public Order GetById(int id)
         {
             using var connection = new SqlConnection(_connectionString);
-            var command = new SqlCommand("SELECT * FROM Orders WHERE Id = @id", connection);
+            using var command = new SqlCommand("SELECT * FROM Orders WHERE Id = @id", connection);
             command.Parameters.AddWithValue("@id", id);
 
             connection.Open();
-            var reader = command.ExecuteReader();
+            using var reader = command.ExecuteReader();
             Order order = null;
 
             while (reader.Read())
@@ -50,24 +47,23 @@ namespace AdoNetTask.Repositories
                 order = MapOrder(reader);
             }
 
-            reader.Close();
-            command.Dispose();
-
             return order;
         }
 
         public IEnumerable<Order> GetBy(OrderStatus? status = null, int? month = null, int? year = null, int? productId = null)
         {
             using var connection = new SqlConnection(_connectionString);
-            var command = new QueryConditionBuilder("SELECT * FROM Orders")
+
+            using var command = new QueryConditionBuilder("SELECT * FROM Orders")
+                .SetConnection(connection)
                 .AddCondition(nameof(status), status)
                 .AddCondition(nameof(productId), productId)
-                .AddSpecificCondition("MONTH(`CreatedDate`)", nameof(month), month)
-                .AddSpecificCondition("YEAR(`CreatedDate`)", nameof(year), year)
+                .AddSpecificCondition("MONTH(CreatedDate)", nameof(month), month)
+                .AddSpecificCondition("YEAR(CreatedDate)", nameof(year), year)
                 .Build();
 
             connection.Open();
-            var reader = command.ExecuteReader();
+            using var reader = command.ExecuteReader();
             var orders = new List<Order>();
 
             while (reader.Read())
@@ -75,16 +71,13 @@ namespace AdoNetTask.Repositories
                 orders.Add(MapOrder(reader));
             }
 
-            reader.Close();
-            command.Dispose();
-
             return orders;
         }
 
         public void Create(Order order)
         {
             using var connection = new SqlConnection(_connectionString);
-            var command = new SqlCommand
+            using var command = new SqlCommand
             {
                 Connection = connection,
                 CommandText = "INSERT INTO Orders VALUES (@status, @createdDate, @updatedDate, @productId)"
@@ -97,13 +90,12 @@ namespace AdoNetTask.Repositories
 
             connection.Open();
             command.ExecuteNonQuery();
-            command.Dispose();
         }
 
         public void Update(Order order)
         {
             using var connection = new SqlConnection(_connectionString);
-            var command = new SqlCommand
+            using var command = new SqlCommand
             {
                 Connection = connection,
                 CommandText = "UPDATE Orders " +
@@ -119,13 +111,12 @@ namespace AdoNetTask.Repositories
 
             connection.Open();
             command.ExecuteNonQuery();
-            command.Dispose();
         }
 
         public void Delete(int id)
         {
             using var connection = new SqlConnection(_connectionString);
-            var command = new SqlCommand
+            using var command = new SqlCommand
             {
                 Connection = connection,
                 CommandText = "DELETE FROM Orders WHERE Id = (@id)"
@@ -135,7 +126,6 @@ namespace AdoNetTask.Repositories
 
             connection.Open();
             command.ExecuteNonQuery();
-            command.Dispose();
         }
 
         public void BulkDelete(OrderStatus? status = null, int? month = null, int? year = null, int? productId = null)
@@ -143,11 +133,12 @@ namespace AdoNetTask.Repositories
             using var transactionScope = new TransactionScope();
             using var connection = new SqlConnection(_connectionString);
 
-            var command = new QueryConditionBuilder("DELETE FROM Orders")
+            using var command = new QueryConditionBuilder("DELETE FROM Orders")
+                .SetConnection(connection)
                 .AddCondition(nameof(status), status)
                 .AddCondition(nameof(productId), productId)
-                .AddSpecificCondition("MONTH(`CreatedDate`)", nameof(month), month)
-                .AddSpecificCondition("YEAR(`CreatedDate`)", nameof(year), year)
+                .AddSpecificCondition("MONTH(CreatedDate)", nameof(month), month)
+                .AddSpecificCondition("YEAR(CreatedDate)", nameof(year), year)
                 .Build();
 
             try
@@ -160,8 +151,6 @@ namespace AdoNetTask.Repositories
             {
                 transactionScope.Dispose();
             }
-
-            command.Dispose();
         }
 
         private static Order MapOrder(SqlDataReader reader) =>

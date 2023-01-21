@@ -16,6 +16,13 @@ namespace AdoNetTask.QueryBuilders
             _hasCondition = false;
         }
 
+        public QueryConditionBuilder SetConnection(SqlConnection connection)
+        {
+            _command.Connection = connection;
+
+            return this;
+        }
+
         public QueryConditionBuilder AddCondition(string paramName, object value)
         {
             if (value != null)
