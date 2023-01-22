@@ -2,9 +2,9 @@
 {
     public class ProductPaginationModel
     {
-        public int PageNumber { get; set; }
+        public int PageNumber { get; set; } = 0;
 
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 10;
 
         public int? CategoryId { get; set; }
     }
