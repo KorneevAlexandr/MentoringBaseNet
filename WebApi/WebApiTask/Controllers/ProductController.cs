@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using WebApiTask.Models.DbModels;
+using WebApiTask.Models.DtoModels;
 using WebApiTask.Models.QueryModels;
 using WebApiTask.Services;
 
@@ -41,7 +41,7 @@ namespace WebApiTask.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Product product)
+        public async Task<IActionResult> Create([FromBody] ProductDto product)
         {
             await _productService.CreateAsync(product);
 
@@ -49,7 +49,7 @@ namespace WebApiTask.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Product product)
+        public async Task<IActionResult> Update([FromBody] ProductDto product)
         {
             await _productService.UpdateAsync(product);
 

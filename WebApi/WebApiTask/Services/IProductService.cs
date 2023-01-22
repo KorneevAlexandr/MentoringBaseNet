@@ -1,9 +1,9 @@
-﻿using WebApiTask.Models.DbModels;
+﻿using WebApiTask.Models.DtoModels;
 
 namespace WebApiTask.Services
 {
-    public interface IProductService : IBaseService<Product>
+    public interface IProductService : IBaseService<ProductDto>
     {
-        Task<IEnumerable<Product>> GetByAsync(int pageNumber, int pageSize, int? categoryId);
+        Task<IEnumerable<ProductDto>> GetByAsync(int pageNumber, int pageSize, int? categoryId);
     }
 }

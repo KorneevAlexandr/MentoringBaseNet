@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebApiTask.Models.DbModels;
+using WebApiTask.Models.DtoModels;
 using WebApiTask.Services;
 
 namespace WebApiTask.Controllers
@@ -8,9 +8,9 @@ namespace WebApiTask.Controllers
     [Route("[controller]")]
     public class CategoryController : ControllerBase
     {
-        private readonly IBaseService<Category> _categoryService;
+        private readonly IBaseService<CategoryDto> _categoryService;
 
-        public CategoryController(IBaseService<Category> categoryService)
+        public CategoryController(IBaseService<CategoryDto> categoryService)
         {
             _categoryService = categoryService;
         }
@@ -32,7 +32,7 @@ namespace WebApiTask.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Category category)
+        public async Task<IActionResult> Create([FromBody] CategoryDto category)
         {
             await _categoryService.CreateAsync(category);
 
@@ -40,7 +40,7 @@ namespace WebApiTask.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Category category)
+        public async Task<IActionResult> Update([FromBody] CategoryDto category)
         {
             await _categoryService.UpdateAsync(category);
 
