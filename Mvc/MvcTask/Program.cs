@@ -4,11 +4,14 @@ using MvcTask.Mapping;
 using MvcTask.Models.DbModels;
 using MvcTask.Models.DtoModels;
 using MvcTask.Services;
+using MvcTask.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<NorthwindDataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.Configure<ProductViewOptions>(builder.Configuration.GetSection(nameof(ProductViewOptions)));
 
 builder.Services.AddScoped<IBaseService<CategoryDto>, BaseService<Category, CategoryDto>>();
 builder.Services.AddScoped<IProductService, ProductService>();

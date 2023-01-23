@@ -13,7 +13,7 @@ namespace MvcTask.Models.DbModels
 
         public int SupplierId { get; set; }
 
-        public int CategoryId { get; set; }
+		public int CategoryId { get; set; }
 
         public string QuantityPerUnit { get; set; }
 
@@ -26,5 +26,11 @@ namespace MvcTask.Models.DbModels
         public short ReorderLevel { get; set; }
 
         public bool Discontinued { get; set; }
+
+		[ForeignKey(nameof(CategoryId))]
+		public Category Category { get; set; }
+
+        [ForeignKey(nameof(SupplierId))]
+        public Supplier Supplier { get; set; }
     }
 }

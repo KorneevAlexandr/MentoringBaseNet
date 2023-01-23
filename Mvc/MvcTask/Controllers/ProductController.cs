@@ -1,43 +1,35 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using MvcTask.Models.DtoModels;
-using MvcTask.Models.QueryModels;
 using MvcTask.Services;
+using MvcTask.Settings;
 
 namespace MvcTask.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class ProductController : ControllerBase
+    public class ProductController : Controller
     {
         private readonly IProductService _productService;
+        private readonly ProductViewOptions _options;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, IOptions<ProductViewOptions> options)
         {
             _productService = productService;
+            _options = options.Value;
         }
-
-        [HttpGet("getBy")]
-        public async Task<IActionResult> GetBy([FromQuery] ProductPaginationModel model)
+ 
+        public async Task<IActionResult> Index()
         {
-            var products = await _productService.GetByAsync(model.PageNumber, model.PageSize, model.CategoryId);
+            var products = await _productService.GetByAsync(_options.MaxProductsPageCount);
 
-            return Ok(products);
-        }
-
-        [HttpGet("getAll")]
-        public async Task<IActionResult> GetAll()
-        {
-            var products = await _productService.GetAllAsync();
-
-            return Ok(products);
+            return View(products);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Create(int id)
         {
             var product = await _productService.GetAsync(id);
 
-            return Ok(product);
+            return View(product);
         }
 
         [HttpPost]
@@ -48,7 +40,15 @@ namespace MvcTask.Controllers
             return Ok();
         }
 
-        [HttpPut]
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
+        {
+            var product = await _productService.GetAsync(id);
+
+            return View(product);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Update([FromBody] ProductDto product)
         {
             await _productService.UpdateAsync(product);
@@ -56,7 +56,7 @@ namespace MvcTask.Controllers
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
             await _productService.DeleteAsync(id);

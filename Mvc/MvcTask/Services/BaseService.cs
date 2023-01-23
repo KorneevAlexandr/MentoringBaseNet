@@ -19,7 +19,7 @@ namespace MvcTask.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<TDtoModel>> GetAllAsync()
+        public virtual async Task<IEnumerable<TDtoModel>> GetAllAsync()
         {
             var items = await _dbSet.ToListAsync();
             var mapItems = items.Select(x => _mapper.Map<TDbModel, TDtoModel>(x));
@@ -27,7 +27,7 @@ namespace MvcTask.Services
             return mapItems;
         }
 
-        public async Task<TDtoModel> GetAsync(int id)
+        public virtual async Task<TDtoModel> GetAsync(int id)
         {
             var item = await _dbSet.FindAsync(id);
             var mapItem = _mapper.Map<TDbModel, TDtoModel>(item);
@@ -35,21 +35,21 @@ namespace MvcTask.Services
             return mapItem;
         }
 
-        public async Task CreateAsync(TDtoModel entity)
+        public virtual async Task CreateAsync(TDtoModel entity)
         {
             var dbItem = _mapper.Map<TDtoModel, TDbModel>(entity);
             await _dbSet.AddAsync(dbItem);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public virtual async Task DeleteAsync(int id)
         {
             var item = await _dbSet.FindAsync(id);
             _dbSet.Remove(item);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(TDtoModel entity)
+        public virtual async Task UpdateAsync(TDtoModel entity)
         {
             var dbItem = _mapper.Map<TDtoModel, TDbModel>(entity);
             _dbSet.Update(dbItem);

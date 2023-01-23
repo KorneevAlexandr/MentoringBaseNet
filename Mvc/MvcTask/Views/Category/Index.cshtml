@@ -1,0 +1,23 @@
+﻿@model IEnumerable<CategoryDto>;
+
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<h2>Categories</h2><br/>
+
+<table class=" table table-striped">
+	<tr>
+		<th>Category name</th>
+		<th>Description</th>
+	</tr>
+
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>@item.CategoryName</td>
+			<td>@item.Description</td>
+		</tr>
+	}
+</table>
+

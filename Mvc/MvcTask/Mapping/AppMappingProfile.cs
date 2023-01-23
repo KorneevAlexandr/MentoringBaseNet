@@ -8,7 +8,11 @@ namespace MvcTask.Mapping
     {
         public AppMappingProfile() 
         {
-            CreateMap<Product, ProductDto>().ReverseMap();
+            CreateMap<Product, ProductDto>()
+                .ForMember(x => x.SupplierName, c => c.MapFrom(src => src.Supplier.CompanyName))
+                .ForMember(x => x.CategoryName, c => c.MapFrom(src => src.Category.CategoryName))
+                .ReverseMap();
+
             CreateMap<Category, CategoryDto>().ReverseMap();
         }
     }

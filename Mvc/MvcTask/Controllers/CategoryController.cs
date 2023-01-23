@@ -4,9 +4,7 @@ using MvcTask.Services;
 
 namespace MvcTask.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class CategoryController : ControllerBase
+    public class CategoryController : Controller
     {
         private readonly IBaseService<CategoryDto> _categoryService;
 
@@ -15,44 +13,11 @@ namespace MvcTask.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpGet("getAll")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> Index()
         {
             var categories = await _categoryService.GetAllAsync();
 
-            return Ok(categories);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Get(int id)
-        {
-            var category = await _categoryService.GetAsync(id);
-
-            return Ok(category);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CategoryDto category)
-        {
-            await _categoryService.CreateAsync(category);
-
-            return Ok();
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] CategoryDto category)
-        {
-            await _categoryService.UpdateAsync(category);
-
-            return Ok();
-        }
-
-        [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
-        {
-            await _categoryService.DeleteAsync(id);
-
-            return Ok();
+            return View(categories);
         }
     }
 }
