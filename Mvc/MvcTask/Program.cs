@@ -14,6 +14,7 @@ builder.Services.AddDbContext<NorthwindDataContext>(options =>
 builder.Services.Configure<ProductViewOptions>(builder.Configuration.GetSection(nameof(ProductViewOptions)));
 
 builder.Services.AddScoped<IBaseService<CategoryDto>, BaseService<Category, CategoryDto>>();
+builder.Services.AddScoped<IBaseService<SupplierDto>, BaseService<Supplier, SupplierDto>>();
 builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddAutoMapper(typeof(AppMappingProfile));

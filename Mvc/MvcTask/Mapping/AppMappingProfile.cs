@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MvcTask.Models.DbModels;
 using MvcTask.Models.DtoModels;
+using MvcTask.ViewModels;
 
 namespace MvcTask.Mapping
 {
@@ -14,6 +15,9 @@ namespace MvcTask.Mapping
                 .ReverseMap();
 
             CreateMap<Category, CategoryDto>().ReverseMap();
+            CreateMap<Supplier, SupplierDto>().ReverseMap();
+
+            CreateMap<ProductDto, ProductCreateUpdateViewModel>().ReverseMap();
         }
     }
 }

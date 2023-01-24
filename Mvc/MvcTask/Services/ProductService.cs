@@ -32,5 +32,25 @@ namespace MvcTask.Services
 
             return mapProducts;
         }
-    }
+
+		public override async Task CreateAsync(ProductDto entity)
+		{
+			var dbItem = _mapper.Map<ProductDto, Product>(entity);
+            dbItem.Supplier = null;
+            dbItem.Category = null;
+
+			await _dbSet.AddAsync(dbItem);
+			await _context.SaveChangesAsync();
+		}
+
+		public override async Task UpdateAsync(ProductDto entity)
+		{
+			var dbItem = _mapper.Map<ProductDto, Product>(entity);
+			dbItem.Supplier = null;
+			dbItem.Category = null;
+
+			_dbSet.Update(dbItem);
+			await _context.SaveChangesAsync();
+		}
+	}
 }

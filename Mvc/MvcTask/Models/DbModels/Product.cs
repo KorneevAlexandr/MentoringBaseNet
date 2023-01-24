@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AutoMapper.Configuration.Annotations;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MvcTask.Models.DbModels
@@ -30,7 +32,7 @@ namespace MvcTask.Models.DbModels
 		[ForeignKey(nameof(CategoryId))]
 		public Category Category { get; set; }
 
-        [ForeignKey(nameof(SupplierId))]
+		[ForeignKey(nameof(SupplierId))]
         public Supplier Supplier { get; set; }
     }
 }
