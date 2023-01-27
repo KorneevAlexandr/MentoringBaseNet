@@ -9,7 +9,7 @@
 		public string ThirdRow { get; set; }
 
 		public static LcdDigit operator +(LcdDigit left, LcdDigit right) =>
-			new LcdDigit
+			new()
 			{
 				FirstRow  = $"{left.FirstRow} {right.FirstRow}",
 				SecondRow = $"{left.SecondRow} {right.SecondRow}",

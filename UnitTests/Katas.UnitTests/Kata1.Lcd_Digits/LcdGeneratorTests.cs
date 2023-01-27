@@ -49,7 +49,7 @@ namespace Katas.UnitTests.Kata1.Lcd_Digits
 			var actual = LcdGenerator.GenerateLcdString(digitsLine);
 
 			// Assert
-			Assert.AreEqual(expected, actual);
+			Assert.That(actual, Is.EqualTo(expected));
 		}
 	}
 }
