@@ -59,7 +59,6 @@ namespace Linq.Task1
             return query;
         }
 
-        // TODO: problem with test data-source
         public static IEnumerable<Customer> Linq3(IEnumerable<Customer> customers, decimal limit)
         {
             if (customers == null)
@@ -67,7 +66,7 @@ namespace Linq.Task1
                 throw new ArgumentNullException(nameof(customers));
             }
 
-            var query = customers.Where(x => x.Orders.Any() && x.Orders.All(o => o.Total > limit)).ToList();
+            var query = customers.Where(x => x.Orders.Any(o => o.Total > limit)).ToList();
 
             return query;
         }
@@ -92,9 +91,9 @@ namespace Linq.Task1
             var query = Linq4(customers);
 
             query = query.OrderBy(x => x.dateOfEntry.Year)
-                         .OrderBy(x => x.dateOfEntry.Month)
-                         .OrderByDescending(x => x.dateOfEntry.Day)
-                         .OrderBy(x => x.customer.CustomerID);
+                         .ThenBy(x => x.dateOfEntry.Month)
+                         .ThenByDescending(x => x.customer.Orders.Sum(o => o.Total))
+                         .ThenBy(x => x.customer.CustomerID);
 
             return query;
         }
