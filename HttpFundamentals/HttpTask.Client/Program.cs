@@ -2,6 +2,8 @@
 
 class Program
 {
+	private const string SiteUrl = "http://localhost:8888";
+
 	private const string InformationPath = "Information";
 	private const string SuccessPath = "Success";
 	private const string RedirectionPath = "Redirection";
@@ -12,18 +14,25 @@ class Program
 
 	public async static Task Main(string[] args)
 	{
-		_httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:8888") };
+		_httpClient = new HttpClient { BaseAddress = new Uri(SiteUrl) };
 
-		await GetMyName("Alex"); // Task 1
+		await GetMyName(); // Task 1
 
 		await StatusCodesRequests(); // Task 2
+
+		await GetMyNameByHeader(); // Task 3
+
+		await GetMyNameByCookies(); // Task 4
 	}
 
-	private static async Task GetMyName(string name)
+	private static async Task GetMyName()
 	{
 		Console.WriteLine("\tTask 1 (GetMyName implementation)\n");
-		var response = await SendRequestAsync(new HttpRequestMessage(HttpMethod.Get, $"Get{name}"));
-		Console.WriteLine(response + "\n");
+
+		var response = await _httpClient.GetAsync("MyName");
+		var content = await response.Content.ReadAsStringAsync();
+
+		Console.WriteLine(content + "\n");
 	}
 
 	private static async Task StatusCodesRequests()
@@ -33,16 +42,38 @@ class Program
 
 		foreach (var requestName in requestNames)
 		{
-			Console.WriteLine($" *** {requestName} status codes ***");
-			var response = await SendRequestAsync(new HttpRequestMessage(HttpMethod.Get, requestName));
-			Console.WriteLine(response + "\n");
+			Console.WriteLine($" *** {requestName} status code ***");
+
+			var response = await _httpClient.GetAsync(requestName);
+			var content = await response.Content.ReadAsStringAsync();
+
+			Console.WriteLine(content + "\n");
 		}
 	}
 
-	private static async Task<string> SendRequestAsync(HttpRequestMessage requestMessage)
+	private static async Task GetMyNameByHeader()
 	{
-		var response = await _httpClient.SendAsync(requestMessage);
-		return await response.Content.ReadAsStringAsync();
+		Console.WriteLine("\tTask 3 (GetMyNameByHeader implementation)\n");
+
+		var response = await _httpClient.GetAsync("MyNameByHeader");
+		var headerValue = response.Headers.GetValues("MyName");
+
+		Console.WriteLine(headerValue.First() + "\n");
+	}
+
+	private static async Task GetMyNameByCookies()
+	{
+		Console.WriteLine("\tTask 4 (GetMyNameByCookies implementation)\n");
+
+		var response = await _httpClient.GetAsync("MyNameByCookies");
+
+		foreach (var cookieHeader in response.Headers.GetValues("Set-Cookie"))
+		{
+			if (cookieHeader.Contains("MyName"))
+			{
+				Console.WriteLine(cookieHeader[7..]);
+			}
+		}
 	}
 }
 

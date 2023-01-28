@@ -1,26 +1,35 @@
-﻿using HttpTask.Listener;
-using System.Net;
+﻿using System.Net;
 
-var listener = new HttpListener();
-listener.Prefixes.Add("http://localhost:8888/");
+namespace HttpTask.Listener;
 
-try
+class Program
 {
-	listener.Start();
+	private const string SiteUrl = "http://localhost:8888/";
 
-	while (true)
+	public static async Task Main(string[] args)
 	{
-		var httpContext = await listener.GetContextAsync();
-		RequestHandler.HandleAsync(httpContext);
+		var listener = new HttpListener();
+		listener.Prefixes.Add(SiteUrl);
+
+		try
+		{
+			listener.Start();
+
+			while (true)
+			{
+				var httpContext = await listener.GetContextAsync();
+				await RequestHandler.HandleAsync(httpContext);
+			}
+		}
+		catch (Exception ex)
+		{
+			Console.ForegroundColor = ConsoleColor.Red;
+			Console.WriteLine(ex.Message);
+		}
+		finally
+		{
+			listener.Stop();
+			listener.Close();
+		}
 	}
-}
-catch (Exception ex)
-{
-	Console.ForegroundColor = ConsoleColor.Red;
-	Console.WriteLine(ex.Message);
-}
-finally
-{
-	listener.Stop();
-	listener.Close();
 }

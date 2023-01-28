@@ -1,7 +1,6 @@
-﻿namespace HttpTask.Listener.Extensions
+﻿namespace HttpTask.Listener.Extensions;
+
+public static class ObjectExtensions
 {
-	public static class ObjectExtensions
-	{
-		public static bool In<T>(this T item, params T[] items) => items.Contains(item);
-	}
+	public static bool In<T>(this T item, params T[] items) => items.Contains(item);
 }
