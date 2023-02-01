@@ -62,7 +62,7 @@ namespace Katas.UnitTests.Kata3.BerlinClock
 									   "OOOO" },
 			new object[] { "23:59:59", "Y\n" +
 									   "RRRR\n" +
-									   "RRRR\n" +
+									   "RRRO\n" +
 									   "YYRYYRYYRYY\n" +
 									   "YYYY" }
 		};
