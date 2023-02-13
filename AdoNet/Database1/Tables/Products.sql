@@ -1,0 +1,10 @@
+﻿CREATE TABLE Products
+(
+	Id INT PRIMARY KEY IDENTITY,
+	Name NVARCHAR(50),
+	Description NVARCHAR(100),
+	Weight FLOAT,
+	Height FLOAT,
+	WIDTH FLOAT,
+	Length FLOAT
+);
