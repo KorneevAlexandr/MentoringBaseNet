@@ -114,6 +114,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNetTask.Tests", "AdoNet\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HttpFundamentals", "HttpFundamentals", "{FAFCE962-87A8-4C4B-BF44-C22EF432749B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpTask.Listener", "HttpFundamentals\HttpTask.Listener\HttpTask.Listener.csproj", "{4E26CBAE-A5BE-49DB-B181-CCB0C830F4E8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpTask.Client", "HttpFundamentals\HttpTask.Client\HttpTask.Client.csproj", "{F301273C-C5E9-4673-8A24-5B17D43EE3BB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JsBasic", "JsBasic", "{3F313D91-C975-4C6D-BE64-A38AD02AACEB}"
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpTask.Listener", "HttpFundamentals\HttpTask.Listener\HttpTask.Listener.csproj", "{4E26CBAE-A5BE-49DB-B181-CCB0C830F4E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpTask.Client", "HttpFundamentals\HttpTask.Client\HttpTask.Client.csproj", "{F301273C-C5E9-4673-8A24-5B17D43EE3BB}"
