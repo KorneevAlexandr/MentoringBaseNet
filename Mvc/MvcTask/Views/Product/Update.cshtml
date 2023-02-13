@@ -1,0 +1,61 @@
+﻿@model ProductCreateUpdateViewModel;
+
+@{
+	ViewData["Title"] = "Updating product";
+}
+
+<form method="post" action="Update">
+	<input type="hidden" name="ProductId" value="@Model.ProductId" />
+	<div class="form-row">
+		<div class="form-group w-25">
+			<label>Supplier</label>
+			<select name="SupplierId" class="form-control" asp-items="@(new SelectList(Model.Suppliers, "SupplierId", "CompanyName",
+				Model.Suppliers.First(x => x.SupplierId == Model.SupplierId).CompanyName))"></select>
+		</div>
+		<div class="form-group w-25">
+			<label>Category</label>
+			<select name="CategoryId" class="form-control" asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName",
+				Model.Categories.First(x => x.CategoryId == Model.CategoryId).CategoryName))"></select>
+		</div>
+		<div class="form-group w-25 ml-3">
+			<label>Product name:</label>
+			<input type="text" class="form-control" required maxlength="9" name="ProductName" value="@Model.ProductName" />
+			<span asp-validation-for="ProductName" />
+		</div>
+	</div>
+
+	<div class="form-row">
+		<div class="form-group w-25 ml-3">
+			<label>QuantityPerUnit:</label>
+			<input type="text" class="form-control" required maxlength="9" name="QuantityPerUnit" value="@Model.QuantityPerUnit" />
+			<span asp-validation-for="QuantityPerUnit" />
+		</div>
+		<div class="form-group w-25 ml-3">
+			<label>UnitPrice:</label>
+			<input type="number" class="form-control" required maxlength="9" name="UnitPrice" value="@Model.UnitPrice" />
+			<span asp-validation-for="UnitPrice" />
+		</div>
+		<div class="form-group w-25 ml-3">
+			<label>UnitsInStock:</label>
+			<input type="number" class="form-control" required maxlength="9" name="UnitsInStock" value="@Model.UnitsInStock" />
+			<span asp-validation-for="UnitsInStock" />
+		</div>
+	</div>
+	<div class="form-row">
+		<div class="form-group w-25 ml-3">
+			<label>UnitsOnOrder:</label>
+			<input type="number" class="form-control" required maxlength="9" name="UnitsOnOrder" value="@Model.UnitsOnOrder" />
+			<span asp-validation-for="UnitsOnOrder" />
+		</div>
+		<div class="form-group w-25 ml-3">
+			<label>ReorderLevel:</label>
+			<input type="number" class="form-control" required maxlength="9" name="ReorderLevel" value="@Model.ReorderLevel" />
+			<span asp-validation-for="ReorderLevel" />
+		</div>
+		<label>Discontinued</label>
+		@Html.CheckBox("Discontinued", Model.Discontinued)
+	</div>
+
+	<input type="submit" class="btn btn-success mt-3" value="Update" />
+
+</form>
